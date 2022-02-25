@@ -36,7 +36,7 @@ sudo apt-get install -y erlang-base \
 sudo apt-get install rabbitmq-server -y --fix-missing
 #Install Essential Dependencies
 sudo apt-get update -y
-
 sudo apt-get install curl gnupg -y
+
 #Enable apt HTTPS Transport
 sudo apt-get install apt-transport-https
