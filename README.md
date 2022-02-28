@@ -1,7 +1,7 @@
 #  RabbitMQ Task
 
 
-### First need to install dependencies on ansible host:
+### First of all install dependencies on ansible host:
 
     apt-get install sshpass ansible git -y 
     
@@ -14,7 +14,7 @@ ECDSA key fingerprint is SHA256:lFPSWCcyHmyuKHYVKFzscAkIso8amGSSnQiBKl4mfo0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added '192.168.160.41' (ECDSA) to the list of known hosts.
 
-### Download repo 
+### Download repo:
 
     git clone https://github.com/cosmogod18/rabbit.git
     
