@@ -56,6 +56,11 @@
         chdir: /opt/rabbit/
         cmd: "bash /opt/rabbit/rabbitmq-erlang-installer.sh"
     - 
+      name: "Install pika python3 lib"
+      shell: 
+        chdir: /opt/rabbit/
+        cmd: "bash /opt/rabbit/dependencies.sh"
+    - 
       file: 
         path: /etc/systemd/system/rabbitmq-server.service.d
         state: directory
