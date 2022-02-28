@@ -25,7 +25,7 @@ def make_request(virtualhost, exchange, queue, routing_key, user, password, body
         channel.queue_declare(queue=queue, durable=True, arguments={'x-message-ttl': 3600000})
         #Bind exchange to queue
         channel.queue_bind(exchange=exchange, queue=queue, routing_key=routing_key)
-        time.sleep(10)       
+        time.sleep(3)       
         channel.basic_publish(exchange=exchange, routing_key=routing_key, body=body)
         print(f'Connected to RabbitMQ virtualhost: {virtualhost}\n')
         print(f'### REQUEST SETTINGS ###\nExchange name: {exchange} \nRouting key: {routing_key}\nMessage: {body}')
