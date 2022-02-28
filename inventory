@@ -5,4 +5,4 @@
 #ansible_port=22
 
 [all]
-Here should be new rabbitMQ IP address
+Here should be new rabbitMQ host IP address
