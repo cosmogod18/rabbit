@@ -1,4 +1,7 @@
 #  RabbitMQ Task
+## Tests was made with clean Debian GNU/Linux 11 (bullseye) installation and ansible 2.9.6.
+
+
 
 
 ### First of all install dependencies on ansible host:
