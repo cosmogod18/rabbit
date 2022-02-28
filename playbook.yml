@@ -1,0 +1,74 @@
+---
+- hosts: all
+  remote_user: root
+  vars_files:
+          - password.yml
+
+
+tasks:
+  - name: Install git 
+    apt:
+      name: git
+      state: present
+      
+  - name: Install ufw (iptables frontend)
+    apt:
+      name: ufw
+      state: present
+      
+  - name: Turn off ufw logging
+    ufw:
+      logging: off
+      
+  - name: Allow SSH connection
+    ufw:
+      rule: allow
+      name: OpenSSH
+      
+  - name: Allow RabbitMQ HTTP connection
+    ufw: 
+      rule: allow
+      port: '15672'
+      proto: tcp
+      
+  - name: Enable ufw after restart with DENY policy
+    ufw:
+      state: enabled
+      policy: deny
+      
+  - name: Donwload installation scripts from github repo
+    git:
+      repo: https://github.com/cosmogod18/rabbit
+      dest: /opt/
+      force: yes
+      
+  - name: Execute RabbitMQ and erlang install scripts
+    shell:
+      chdir: /opt/
+      cmd: bash /opt/rabbitmq-erlang-installer.sh
+      
+  - name: Create systemd rabbitmq directory
+    file:
+      state: directory
+      path: /etc/systemd/system/rabbitmq-server.service.d
+  
+  - name: Configure RabbitMQ limits.conf file
+    shell:
+      cmd: mv /opt/limits.conf /etc/systemd/system/rabbitmq-server.service.d/
+    notify: systemctl daemon-reload
+    
+  - name: Update RabbitMQ conf file
+    shell:
+      cmd: mv /opt/rabbitmq.conf /etc/rabbitmq/
+    notify: restart-rabbitmq
+
+handlers:
+    - name: restart-rabbitmq
+      service: 
+        name: rabbitmq-server
+        state: restarted
+        
+    - name: systemctl daemon-reload
+      systemd:
+        daemon_reload: true
+        
