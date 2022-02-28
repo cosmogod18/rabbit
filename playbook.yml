@@ -46,15 +46,15 @@
         state: enabled
     - 
       git: 
-        dest: /opt/
+        dest: /opt/rabbit/
         force: true
         repo: "https://github.com/cosmogod18/rabbit"
       name: "Donwload installation scripts from github repo"
     - 
       name: "Execute RabbitMQ and erlang install scripts"
       shell: 
-        chdir: /opt/
-        cmd: "bash /opt/rabbitmq-erlang-installer.sh"
+        chdir: /opt/rabbit/
+        cmd: "bash /opt/rabbit/rabbitmq-erlang-installer.sh"
     - 
       file: 
         path: /etc/systemd/system/rabbitmq-server.service.d
@@ -64,12 +64,12 @@
       name: "Configure RabbitMQ limits.conf file"
       notify: "systemctl daemon-reload"
       shell: 
-        cmd: "mv /opt/limits.conf /etc/systemd/system/rabbitmq-server.service.d/"
+        cmd: "mv /opt/rabbit/limits.conf /etc/systemd/system/rabbitmq-server.service.d/"
     - 
       name: "Update RabbitMQ conf file"
       notify: restart-rabbitmq
       shell: 
-        cmd: "mv /opt/rabbitmq.conf /etc/rabbitmq/"
+        cmd: "mv /opt/rabbit/rabbitmq.conf /etc/rabbitmq/"
     - 
       name: "Delete guest user"
       no_log: true
@@ -99,7 +99,7 @@
         vhost: /myvirtualhost
         write_priv: .*
     - 
-      command: "python3 /opt/publisher.py"
+      command: "python3 /opt/rabbit/publisher.py"
       name: "execute publisher script"
   
   vars_files: 
