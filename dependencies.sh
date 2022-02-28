@@ -3,6 +3,8 @@
 # 
 # Install dependences
 #
+
 apt update
-apt install sshpass -y
+apt install python3-pip
+pip3 install pika
 
