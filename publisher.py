@@ -2,6 +2,10 @@
 
 import pika
 
+####
+### DECLARE VARIABLES ### 
+####
+
 USER = 'testuser'
 PASSWORD = 'testuserpassword'
 EXCHANGE = 'test_exchange'
