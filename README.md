@@ -14,6 +14,13 @@ ECDSA key fingerprint is SHA256:lFPSWCcyHmyuKHYVKFzscAkIso8amGSSnQiBKl4mfo0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added '192.168.160.41' (ECDSA) to the list of known hosts.
 
+### Download repo 
+
+    git clone https://github.com/cosmogod18/rabbit.git
+    
+    cd /rabbit/
+    
+
 ### In ansible host modify inventory file with desired IP address and start playbook with:
     
     ansible-playbook playbook.yml -i inventory  --vault-password-file vault-pass  --ask-pass
