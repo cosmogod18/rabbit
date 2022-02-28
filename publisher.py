@@ -20,7 +20,7 @@ def make_request(virtualhost, exchange, queue, routing_key, user, password, body
         connection = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,virtualhost, credentials=credentials))
         channel = connection.channel()
         # Declare Exchange and queue 
-        channel.exchange_declare(exchange=exchange, exchange_type='direct')
+        channel.exchange_declare(exchange=exchange,durable=True exchange_type='direct')
         channel.queue_declare(queue=queue, durable=True, arguments={'x-message-ttl': 3600000})
         #Bind queue to exchange
         channel.queue_bind(exchange=exchange, queue=queue, routing_key=routing_key)
