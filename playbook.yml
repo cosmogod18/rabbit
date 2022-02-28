@@ -18,7 +18,7 @@
       
   - name: Turn off ufw logging
     ufw:
-      logging: off
+      logging: 'off'
       
   - name: Allow SSH connection
     ufw:
@@ -61,7 +61,20 @@
     shell:
       cmd: mv /opt/rabbitmq.conf /etc/rabbitmq/
     notify: restart-rabbitmq
-
+  
+  - name: Delete guest user 
+    no_log: true
+    rabbitmq_user:
+      user: guest
+      state: absent
+      
+  - name: Enable RabbitMQ managemnt
+    rabbitmq_plugin:
+      names: rabbitmq_management
+      state: enabled
+  
+  
+  
   handlers:
     - name: restart-rabbitmq
       service: 
