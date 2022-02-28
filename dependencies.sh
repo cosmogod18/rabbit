@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 
-# Install python dependences
+# Install dependences
 #
 apt update
 apt install ansible python3-pip git -y
