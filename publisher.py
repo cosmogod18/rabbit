@@ -26,7 +26,7 @@ def make_request(virtualhost, exchange, queue, routing_key, user, password, body
         #Bind exchange to queue
         channel.queue_bind(exchange=exchange, queue=queue, routing_key=routing_key)
         time.sleep(3)       
-        channel.basic_publish(exchange=exchange, routing_key=routing_key, body=body)
+        channel.basic_publish(exchange=exchange, routing_key=routing_key, body=body,properties=pika.BasicProperties(delivery_mode=2,)) # to make persistent 
         print(f'Connected to RabbitMQ virtualhost: {virtualhost}\n')
         print(f'### REQUEST SETTINGS ###\nExchange name: {exchange} \nRouting key: {routing_key}\nMessage: {body}')
         print('### REQUST SETTINGS END ###\n')
