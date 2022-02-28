@@ -72,9 +72,23 @@
     rabbitmq_plugin:
       names: rabbitmq_management
       state: enabled
-  
-  
-  
+      
+  - name: Create virtual host "/myvirtualhost"
+    rabbitmq_vhost:
+      name: /myvirtualhost
+      state: present
+      
+  - name: create user "testuser"
+    rabbitmq:user:
+      user: testuser
+      password: "{{ password }}"
+      vhost: /myvirtualhost
+      tags: administrator
+      read_priv: .*
+      write_priv: .*
+      configure_priv: .*
+      state: present
+        
   handlers:
     - name: restart-rabbitmq
       service: 
