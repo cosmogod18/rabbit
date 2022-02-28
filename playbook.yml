@@ -5,7 +5,7 @@
           - password.yml
 
 
-tasks:
+  tasks:
   - name: Install git 
     apt:
       name: git
@@ -62,7 +62,7 @@ tasks:
       cmd: mv /opt/rabbitmq.conf /etc/rabbitmq/
     notify: restart-rabbitmq
 
-handlers:
+  handlers:
     - name: restart-rabbitmq
       service: 
         name: rabbitmq-server
