@@ -3,7 +3,7 @@
 
 ### First need to install dependencies on ansible host:
 
-    apt-get install sshpass
+    apt-get install sshpass ansible git -y 
 
 ### Modify inventory file with desired IP address and start playbook with:
     
