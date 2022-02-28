@@ -16,7 +16,7 @@
     The authenticity of host '192.168.160.41 (192.168.160.41)' can't be established.
     ECDSA key fingerprint is SHA256:lFPSWCcyHmyuKHYVKFzscAkIso8amGSSnQiBKl4mfo0.
     Are you sure you want to continue connecting (yes/no/[fingerprint])?
-yes
+    yes
     Warning: Permanently added '192.168.160.41' (ECDSA) to the list of known hosts.
 
 ### Download repo:
