@@ -25,3 +25,12 @@ Warning: Permanently added '192.168.160.41' (ECDSA) to the list of known hosts.
     
     ansible-playbook playbook.yml -i inventory  --vault-password-file vault-pass  --ask-pass
 
+### After successful playbook You should access RabbitMQ web interface with default port:
+        User: testuser
+        password: testuserpassword
+        Test_exchange: test_exchange
+        Test_queue: test_queue
+        Routing_key: test_key
+        RabbitMq_msg: 'Hello RabbitMQ :)' TTL 3600sec
+        VirtualHost: myvirtualhost
+        http://x.x.x.x:15671
