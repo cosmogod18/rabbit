@@ -5,6 +5,7 @@
 
     apt-get install sshpass
 
-### To start playbook
- ansible-playbook playbook.yml -i inventor  --vault-password-file vault-pass  --ask-pass
+### Modify inventory file with desired IP address and start playbook with:
+    
+    ansible-playbook playbook.yml -i inventor  --vault-password-file vault-pass  --ask-pass
 
