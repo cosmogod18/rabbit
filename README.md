@@ -18,7 +18,7 @@ Warning: Permanently added '192.168.160.41' (ECDSA) to the list of known hosts.
 
     git clone https://github.com/cosmogod18/rabbit.git
     
-    cd /rabbit/
+    cd rabbit/
     
 
 ### In ansible host modify inventory file with desired IP address and start playbook with:
