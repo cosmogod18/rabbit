@@ -20,9 +20,9 @@ def make_request(virtualhost, exchange, queue, routing_key, user, password, body
         connection = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,virtualhost, credentials=credentials))
         channel = connection.channel()
         # Declare Exchange and queue 
-        channel.exchange_declare(exchange=exchange,durable=True exchange_type='direct')
+        channel.exchange_declare(exchange=exchange,durable=True, exchange_type='direct')
         channel.queue_declare(queue=queue, durable=True, arguments={'x-message-ttl': 3600000})
-        #Bind queue to exchange
+        #Bind exchange to queue
         channel.queue_bind(exchange=exchange, queue=queue, routing_key=routing_key)
         print(f'Connection on RabbitMQ virtualhost: {virtualhost}\n')
         channel.basic_publish(exchange=exchange, routing_key=routing_key, body=body)
