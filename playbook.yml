@@ -1,101 +1,106 @@
----
-- hosts: all
-  remote_user: root
-  vars_files:
-          - password.yml
-
-
-  tasks:
-  - name: Install git 
-    apt:
-      name: git
-      state: present
-      
-  - name: Install ufw (iptables frontend)
-    apt:
-      name: ufw
-      state: present
-      
-  - name: Turn off ufw logging
-    ufw:
-      logging: 'off'
-      
-  - name: Allow SSH connection
-    ufw:
-      rule: allow
-      name: OpenSSH
-      
-  - name: Allow RabbitMQ HTTP connection
-    ufw: 
-      rule: allow
-      port: '15672'
-      proto: tcp
-      
-  - name: Enable ufw after restart with DENY policy
-    ufw:
-      state: enabled
-      policy: deny
-      
-  - name: Donwload installation scripts from github repo
-    git:
-      repo: https://github.com/cosmogod18/rabbit
-      dest: /opt/
-      force: yes
-      
-  - name: Execute RabbitMQ and erlang install scripts
-    shell:
-      chdir: /opt/
-      cmd: bash /opt/rabbitmq-erlang-installer.sh
-      
-  - name: Create systemd rabbitmq directory
-    file:
-      state: directory
-      path: /etc/systemd/system/rabbitmq-server.service.d
-  
-  - name: Configure RabbitMQ limits.conf file
-    shell:
-      cmd: mv /opt/limits.conf /etc/systemd/system/rabbitmq-server.service.d/
-    notify: systemctl daemon-reload
-    
-  - name: Update RabbitMQ conf file
-    shell:
-      cmd: mv /opt/rabbitmq.conf /etc/rabbitmq/
-    notify: restart-rabbitmq
-  
-  - name: Delete guest user 
-    no_log: true
-    rabbitmq_user:
-      user: guest
-      state: absent
-      
-  - name: Enable RabbitMQ managemnt
-    rabbitmq_plugin:
-      names: rabbitmq_management
-      state: enabled
-      
-  - name: Create virtual host "/myvirtualhost"
-    rabbitmq_vhost:
-      name: /myvirtualhost
-      state: present
-      
-  - name: create user "testuser"
-    rabbitmq:user:
-      user: testuser
-      password: "{{ password }}"
-      vhost: /myvirtualhost
-      tags: administrator
-      read_priv: .*
-      write_priv: .*
-      configure_priv: .*
-      state: present
-        
-  handlers:
-    - name: restart-rabbitmq
+--- 
+- 
+  handlers: 
+    - 
+      name: "systemctl daemon-reload"
+      systemd: 
+        daemon_reload: true
+    - 
+      name: restart-rabbitmq
       service: 
         name: rabbitmq-server
         state: restarted
         
-    - name: systemctl daemon-reload
-      systemd:
-        daemon_reload: true
-        
+  hosts: all
+  remote_user: root
+  tasks: 
+    - 
+      apt: 
+        name: git
+        state: present
+      name: "Install git"
+    - 
+      apt: 
+        name: ufw
+        state: present
+      name: "Install ufw (iptables frontend)"
+    - 
+      name: "Turn off ufw logging"
+      ufw: 
+        logging: "off"
+    - 
+      name: "Allow SSH connection"
+      ufw: 
+        name: OpenSSH
+        rule: allow
+    - 
+      name: "Allow RabbitMQ HTTP connection"
+      ufw: 
+        port: "15672"
+        proto: tcp
+        rule: allow
+    - 
+      name: "Enable ufw after restart with DENY policy"
+      ufw: 
+        policy: deny
+        state: enabled
+    - 
+      git: 
+        dest: /opt/
+        force: true
+        repo: "https://github.com/cosmogod18/rabbit"
+      name: "Donwload installation scripts from github repo"
+    - 
+      name: "Execute RabbitMQ and erlang install scripts"
+      shell: 
+        chdir: /opt/
+        cmd: "bash /opt/rabbitmq-erlang-installer.sh"
+    - 
+      file: 
+        path: /etc/systemd/system/rabbitmq-server.service.d
+        state: directory
+      name: "Create systemd rabbitmq directory"
+    - 
+      name: "Configure RabbitMQ limits.conf file"
+      notify: "systemctl daemon-reload"
+      shell: 
+        cmd: "mv /opt/limits.conf /etc/systemd/system/rabbitmq-server.service.d/"
+    - 
+      name: "Update RabbitMQ conf file"
+      notify: restart-rabbitmq
+      shell: 
+        cmd: "mv /opt/rabbitmq.conf /etc/rabbitmq/"
+    - 
+      name: "Delete guest user"
+      no_log: true
+      rabbitmq_user: 
+        state: absent
+        user: guest
+    - 
+      name: "Enable RabbitMQ managemnt"
+      rabbitmq_plugin: 
+        names: rabbitmq_management
+        state: enabled
+    - 
+      name: "Create virtual host \"/myvirtualhost\""
+      rabbitmq_vhost: 
+        name: /myvirtualhost
+        state: present
+    - 
+      name: "create user testuser"
+      no_log: true
+      rabbitmq_user: 
+        configure_priv: .*
+        password: "{{ password }}"
+        read_priv: .*
+        state: present
+        tags: administrator
+        user: testuser
+        vhost: /myvirtualhost
+        write_priv: .*
+    - 
+      command: "python3 /opt/publisher.py"
+      name: "execute publisher script"
+  
+  vars_files: 
+    - password.yml
