@@ -3,6 +3,6 @@
 # 
 # Install python dependences
 #
-
-apt install python3-pip -y
+apt update
+apt install ansible python3-pip git -y
 pip3 install pika
